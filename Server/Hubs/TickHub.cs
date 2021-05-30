@@ -1,13 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Timers;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
+using Timer = System.Timers.Timer;
 
 namespace Server.Hubs
 {
-    public class TickHub : Hub
+    public class TickHub : Hub<ITick>
     {
-        public async Task Tick(int time)
+        public override async Task OnConnectedAsync()
         {
-            await Clients.All.SendAsync("OnTickReceived", time);
+            await Clients.All.OnConnected();
         }
     }
 }
